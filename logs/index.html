@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KVS Console | Live Stream</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { 
+            background: #0f172a; color: #e9d5ff; 
+            min-height: 100vh; font-family: 'Fira Code', 'Courier New', monospace; 
+            display: flex; align-items: center; justify-content: center;
+        }
+        .terminal-window { 
+            background: rgba(28, 25, 56, 0.95); 
+            backdrop-filter: blur(10px); 
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            border-radius: 12px;
+            width: 90%; max-width: 800px;
+            height: 500px;
+            display: flex; flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 20px rgba(168, 85, 247, 0.1);
+        }
+        .terminal-header {
+            background: rgba(168, 85, 247, 0.1);
+            padding: 10px 20px;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        #log-container {
+            flex-grow: 1; padding: 20px; overflow-y: auto;
+            font-size: 13px; line-height: 1.6;
+        }
+        .log-entry { margin-bottom: 4px; border-left: 2px solid transparent; padding-left: 10px; }
+        .log-timestamp { color: #a855f7; font-weight: bold; margin-right: 10px; }
+        .log-info { color: #22c55e; }
+        .log-warn { color: #eab308; }
+        .log-error { color: #ef4444; border-left-color: #ef4444; background: rgba(239, 68, 68, 0.05); }
+        .cursor { display: inline-block; width: 8px; height: 15px; background: #a855f7; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+        #log-container::-webkit-scrollbar { width: 6px; }
+        #log-container::-webkit-scrollbar-thumb { background: rgba(168, 85, 247, 0.3); border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="terminal-window">
+        <div class="terminal-header">
+            <div class="flex space-x-2">
+                <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+            </div>
+            <div class="text-[10px] uppercase tracking-[0.3em] font-bold text-purple-400">
+                KVS_LOG_AGGREGATOR_v2.0
+            </div>
+            <i class="fas fa-terminal text-purple-500/50"></i>
+        </div>
+
+        <div id="log-container">
+            <div class="log-entry">
+                <span class="log-timestamp">[SYSTEM]</span>
+                <span class="text-purple-300">Initializing cluster handshake...</span>
+            </div>
+        </div>
+
+        <div class="p-4 border-t border-white/5 flex justify-between items-center bg-black/20">
+            <div class="text-[10px] text-slate-500 font-bold uppercase">
+                Status: <span class="text-green-500">Streaming</span>
+            </div>
+            <a href="/" class="text-[10px] text-purple-400 hover:text-white transition uppercase font-bold tracking-widest">
+                Return to Master Dashboard
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const container = document.getElementById('log-container');
+        const services = ['CALC_SVC', 'CURR_SVC', 'WTHR_SVC', 'HLTH_SVC', 'AUTH_NODE'];
+        const actions = [
+            { msg: 'Inbound request handled', type: 'info' },
+            { msg: 'Buffer sync completed', type: 'info' },
+            { msg: 'Latency spike detected (42ms)', type: 'warn' },
+            { msg: 'Heartbeat signal acknowledged', type: 'info' },
+            { msg: 'Cache miss on key: cluster_state', type: 'warn' },
+            { msg: 'Unauthorized ping dropped', type: 'error' },
+            { msg: 'Database connection re-established', type: 'info' }
+        ];
+
+        function addLog() {
+            const time = new Date().toLocaleTimeString('en-GB', { hour12: false });
+            const service = services[Math.floor(Math.random() * services.length)];
+            const action = actions[Math.floor(Math.random() * actions.length)];
+            
+            const div = document.createElement('div');
+            div.className = `log-entry ${action.type === 'error' ? 'log-error' : ''}`;
+            
+            div.innerHTML = `
+                <span class="log-timestamp">${time}</span>
+                <span class="text-blue-400">[${service}]</span>
+                <span class="${action.type === 'warn' ? 'log-warn' : action.type === 'error' ? 'log-error' : 'log-info'}">
+                    ${action.msg}
+                </span>
+            `;
+            
+            container.appendChild(div);
+            
+            // Auto-scroll to bottom
+            container.scrollTop = container.scrollHeight;
+
+            // Keep only last 50 logs for performance
+            if (container.children.length > 50) {
+                container.removeChild(container.children[0]);
+            }
+
+            // Randomize next log timing
+            setTimeout(addLog, Math.random() * 2000 + 500);
+        }
+
+        // Initial cursor
+        const cursorDiv = document.createElement('div');
+        cursorDiv.innerHTML = '<span class="cursor"></span>';
+        container.appendChild(cursorDiv);
+
+        // Start log stream
+        setTimeout(addLog, 1000);
+    </script>
+</body>
+</html>
