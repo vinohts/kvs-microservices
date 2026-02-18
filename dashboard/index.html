@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KVS Microservices</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background: radial-gradient(circle at top left, #0f172a, #1e1b4b); color: white; min-height: 100vh; font-family: 'Inter', sans-serif; }
+        .service-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid rgba(255,255,255,0.1); }
+        .service-card:hover { transform: translateY(-10px); border-color: #38bdf8; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(56, 189, 248, 0.2); }
+        .glass { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); }
+    </style>
+</head>
+<body class="p-8">
+    <header class="text-center mb-16">
+        <h1 class="text-5xl font-extrabold tracking-tight mb-2">
+            <span class="bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-emerald-400">KVS</span> Microservices
+        </h1>
+        <p class="text-slate-400 uppercase tracking-widest text-sm">itops.fun Cluster Control</p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        
+        <div class="service-card glass p-8 rounded-3xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4 opacity-10"><i class="fas fa-calculator text-6xl text-pink-500"></i></div>
+            <h3 class="text-2xl font-bold text-pink-500 mb-4">Calculator</h3>
+            <p class="text-slate-400 text-sm mb-6">A dedicated microservice for mathematical logic operations.</p>
+            <a href="/calc/" class="inline-block w-full text-center py-3 rounded-xl bg-pink-600 hover:bg-pink-500 font-bold transition shadow-lg shadow-pink-900/20">Launch KVS Calculator</a>
+        </div>
+
+        <div class="service-card glass p-8 rounded-3xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4 opacity-10"><i class="fas fa-heartbeat text-6xl text-emerald-400"></i></div>
+            <h3 class="text-2xl font-bold text-emerald-400 mb-4">Service Health</h3>
+            <p class="text-slate-400 text-sm mb-6">Real-time container health and cluster performance metrics.</p>
+            <a href="/health/" class="inline-block w-full text-center py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-bold transition shadow-lg shadow-emerald-900/20">Check Cluster</a>
+        </div>
+
+        <div class="service-card glass p-8 rounded-3xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4 opacity-10"><i class="fas fa-cloud-sun text-6xl text-orange-400"></i></div>
+            <h3 class="text-2xl font-bold text-orange-400 mb-4">Weather API</h3>
+            <p class="text-slate-400 text-sm mb-6">External data fetching microservice for localized weather.</p>
+            <a href="/weather/" class="inline-block w-full text-center py-3 rounded-xl bg-orange-600 hover:bg-orange-500 font-bold transition">View Forecast</a>
+        </div>
+
+        <div class="service-card glass p-8 rounded-3xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4 opacity-10"><i class="fas fa-coins text-6xl text-sky-400"></i></div>
+            <h3 class="text-2xl font-bold text-sky-400 mb-4">DevOps Currency</h3>
+            <p class="text-slate-400 text-sm mb-6">Real-time exchange rates for global infrastructure spending.</p>
+            <a href="/currency/" class="inline-block w-full text-center py-3 rounded-xl bg-sky-600 hover:bg-sky-500 font-bold transition">Exchange Rates</a>
+        </div>
+
+        <div class="service-card glass p-8 rounded-3xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4 opacity-10"><i class="fas fa-terminal text-6xl text-purple-500"></i></div>
+            <h3 class="text-2xl font-bold text-purple-500 mb-4">Console Logs</h3>
+            <p class="text-slate-400 text-sm mb-6">Direct access to containerized stdout/stderr log streams.</p>
+            <a href="/logs/" class="inline-block w-full text-center py-3 rounded-xl bg-purple-600 hover:bg-purple-500 font-bold transition">Inspect Logs</a>
+        </div>
+
+        <div class="service-card bg-slate-900/30 backdrop-blur-xl p-8 rounded-3xl relative overflow-hidden border-dashed border-2 border-slate-700 flex flex-col justify-center items-center">
+            <i class="fas fa-plus-circle text-4xl text-slate-700 mb-4"></i>
+            <h3 class="text-xl font-bold text-slate-600">New Microservice</h3>
+            <p class="text-slate-600 text-xs mt-2 italic">Scale Cluster (Admin Only)</p>
+        </div>
+    </div>
+
+    <footer class="mt-20 text-center text-slate-500 text-xs">
+        &copy; 2026 KVS Microservices Group • Deployment: <span class="text-emerald-500">v2.0.4-stable</span>
+    </footer>
+</body>
+</html>
